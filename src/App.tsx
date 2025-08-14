@@ -217,12 +217,12 @@ function App() {
         transition={{ duration: 0.8, ease: "easeOut" }}
         viewport={{ once: true, amount: 0.2 }}
       >
-        <div className="max-w-5xl w-full">
-        <h2 className="text-4xl md:text-5xl font-bold mb-10 relative inline-block text-white">
-          Skills
-          <span className="absolute left-0 -bottom-3.5 w-full h-1 bg-purple-500 rounded-full"></span>
-        </h2>
-        
+        <div className="max-w-5xl w-full text-center">
+          <h2 className="text-4xl md:text-5xl font-bold mb-10 relative inline-block text-white">
+            Skills
+            <span className="absolute left-1/2 transform -translate-x-1/2 -bottom-3.5 w-full h-1 bg-purple-500 rounded-full"></span>
+          </h2>
+          
           {/* Technical Skills */}
           <h3 className="text-2xl font-semibold mb-6 text-purple-400">Web Development / Technical Skills</h3>
           <motion.div
