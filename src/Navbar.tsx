@@ -74,8 +74,6 @@ const Navbar = () => {
         </button>
       </nav>
 
-      {/* Dropdown container */}
-      {/* Dropdown inside expanding header */}
       <AnimatePresence>
         {isOpen && (
           <motion.div
@@ -90,7 +88,8 @@ const Navbar = () => {
                 key={item}
                 variants={linkVariants}
                 className="flex w-full items-center justify-end py-3 px-6 rounded-md hover:bg-purple-500/10 hover:text-purple-400 transition"
-                onClick={() => {
+                onClick={(e) => {
+                  e.preventDefault(); // important for Samsung/Android
                   const section = document.getElementById(item.toLowerCase());
                   if (section) {
                     section.scrollIntoView({ behavior: "smooth", block: "start" });
