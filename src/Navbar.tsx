@@ -75,6 +75,7 @@ const Navbar = () => {
       </nav>
 
       {/* Dropdown container */}
+      {/* Dropdown inside expanding header */}
       <AnimatePresence>
         {isOpen && (
           <motion.div
@@ -85,19 +86,25 @@ const Navbar = () => {
             className="md:hidden px-6 pb-4 text-white text-sm uppercase tracking-wider text-right w-fit ml-auto"
           >
             {menuItems.map((item) => (
-              <motion.a
+              <motion.button
                 key={item}
-                href={`#${item.toLowerCase()}`}
                 variants={linkVariants}
                 className="flex w-full items-center justify-end py-3 px-6 rounded-md hover:bg-purple-500/10 hover:text-purple-400 transition"
-                onClick={() => setIsOpen(false)}
+                onClick={() => {
+                  const section = document.getElementById(item.toLowerCase());
+                  if (section) {
+                    section.scrollIntoView({ behavior: "smooth", block: "start" });
+                  }
+                  setIsOpen(false);
+                }}
               >
                 {item}
-              </motion.a>
+              </motion.button>
             ))}
           </motion.div>
         )}
       </AnimatePresence>
+
     </motion.header>
   );
 };
