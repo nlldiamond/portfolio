@@ -63,7 +63,7 @@ function App() {
             Neil Diamond Rosete <br />
             <span className="text-purple-400 text-2xl md:text-3xl">
               <Typewriter
-                words={['Web Developer', 'IT Enthusiast', 'Tech Lover']}
+                words={['Web Developer', 'IT Specialist']}
                 loop={true}
                 cursor
                 cursorStyle="_"
