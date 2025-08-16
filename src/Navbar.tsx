@@ -85,16 +85,17 @@ const Navbar = () => {
             className="md:hidden px-6 pb-4 text-white text-sm uppercase tracking-wider text-right w-fit ml-auto"
           >
             {menuItems.map((item) => (
-              <motion.button
+              <motion.a
                 key={item}
+                href={`#${item.toLowerCase()}`}
                 variants={linkVariants}
                 className="flex w-full items-center justify-end py-3 px-6 rounded-md hover:bg-purple-500/10 hover:text-purple-400 transition"
                 onClick={(e) => {
-                  e.preventDefault(); // prevent default anchor behavior
+                  e.preventDefault(); // stop default anchor jump
 
                   const section = document.getElementById(item.toLowerCase());
                   if (section) {
-                    const yOffset = -70; // adjust for your fixed header height
+                    const yOffset = -70; // adjust for fixed header
                     const y =
                       section.getBoundingClientRect().top +
                       window.scrollY +
@@ -107,7 +108,7 @@ const Navbar = () => {
                 }}
               >
                 {item}
-              </motion.button>
+              </motion.a>
             ))}
           </motion.div>
         )}
