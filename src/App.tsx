@@ -2,7 +2,7 @@ import { Typewriter } from 'react-simple-typewriter';
 import { motion } from 'framer-motion';
 import Navbar from './Navbar';
 import profileImg from './assets/zoomed.jpg';
-import { FaGithub, FaLinkedin, FaEnvelope, FaLaptopCode, FaNetworkWired, FaServer, FaDatabase, FaCamera, FaMicrosoft, FaPhoneAlt } from "react-icons/fa";
+import { FaGithub, FaLinkedin, FaEnvelope, FaLaptopCode, FaNetworkWired, FaServer, FaDatabase, FaMicrosoft, FaPhoneAlt } from "react-icons/fa";
 import { 
   SiReact, SiTailwindcss, SiNextdotjs, SiHtml5, SiCss3, SiPhp, SiMysql, SiVite, SiFigma, SiSalesforce, SiQuickbooks, SiGoogle, SiSlack, SiTrello, SiGithub as SiGithub, SiZoom  
 } from "react-icons/si";
