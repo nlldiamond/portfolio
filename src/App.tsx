@@ -8,6 +8,7 @@ import {
 } from "react-icons/si";
 import { VscVscode } from "react-icons/vsc";
 import heyorcaLogo from "./assets/heyorca.jpeg";
+import canvaLogo from "./assets/canva.png";
 import NazerSS from "./assets/NazerSS.png"; 
 import RecipeBook from "./assets/RecipeBook.png"; 
 import KaLaro from "./assets/KaLaro.jpg"; 
@@ -287,9 +288,9 @@ function App() {
               { icon: <SiTrello />, label: "Trello" },
               { icon: <SiGithub />, label: "Git/GitHub" },
               { icon: <SiZoom />, label: "Zoom" },
-              { icon: <img src={heyorcaLogo} alt="HeyOrca" className="w-8 h-8 object-contain" />, label: "HeyOrca" },
+              { icon: <img src={heyorcaLogo} alt="HeyOrca" className="w-9 h-9 object-contain" />, label: "HeyOrca" },
               { icon: <SiGoogle />, label: "Google" },
-              { icon: <FaCamera />, label: "Canva" }
+              { icon: <img src={canvaLogo} alt="Canva" className="w-12 h-12 object-contain" />, label: "Canva" },
             ].map((tool, index) => (
               <motion.div
                 key={index}
