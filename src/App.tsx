@@ -289,7 +289,6 @@ function App() {
               { icon: <SiGithub />, label: "Git/GitHub" },
               { icon: <SiZoom />, label: "Zoom" },
               { icon: <img src={heyorcaLogo} alt="HeyOrca" className="w-9 h-9 object-contain" />, label: "HeyOrca" },
-              { icon: <SiGoogle />, label: "Google" },
               { icon: <img src={canvaLogo} alt="Canva" className="w-12 h-12 object-contain" />, label: "Canva" },
             ].map((tool, index) => (
               <motion.div
