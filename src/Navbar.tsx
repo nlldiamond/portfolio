@@ -13,7 +13,7 @@ const Navbar = () => {
       y: 0,
       transition: {
         duration: 0.4,
-        ease: easeInOut, // ✅ use imported easing function
+        ease: easeInOut,
         staggerChildren: 0.1,
       },
     },
@@ -25,7 +25,7 @@ const Navbar = () => {
     visible: {
       opacity: 1,
       x: 0,
-      transition: { duration: 0.3, ease: easeInOut }, // ✅ fixed here too
+      transition: { duration: 0.3, ease: easeInOut },
     },
   };
 
@@ -34,7 +34,7 @@ const Navbar = () => {
   return (
     <motion.header
       animate={{ height: isOpen ? "auto" : "4.5rem" }}
-      transition={{ duration: 0.4, ease: easeInOut }} // ✅ fixed here too
+      transition={{ duration: 0.4, ease: easeInOut }}
       className="fixed top-0 left-0 w-full z-50 bg-[#0f0f0f]/80 backdrop-blur-sm border-b border-white/10 overflow-hidden"
     >
       <nav className="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center text-white uppercase tracking-wider text-sm">
@@ -74,6 +74,7 @@ const Navbar = () => {
         </button>
       </nav>
 
+      {/* Mobile Dropdown */}
       <AnimatePresence>
         {isOpen && (
           <motion.div
@@ -89,11 +90,19 @@ const Navbar = () => {
                 variants={linkVariants}
                 className="flex w-full items-center justify-end py-3 px-6 rounded-md hover:bg-purple-500/10 hover:text-purple-400 transition"
                 onClick={(e) => {
-                  e.preventDefault(); // important for Samsung/Android
+                  e.preventDefault(); // prevent default anchor behavior
+
                   const section = document.getElementById(item.toLowerCase());
                   if (section) {
-                    section.scrollIntoView({ behavior: "smooth", block: "start" });
+                    const yOffset = -70; // adjust for your fixed header height
+                    const y =
+                      section.getBoundingClientRect().top +
+                      window.scrollY +
+                      yOffset;
+
+                    window.scrollTo({ top: y, behavior: "smooth" });
                   }
+
                   setIsOpen(false);
                 }}
               >
@@ -103,7 +112,6 @@ const Navbar = () => {
           </motion.div>
         )}
       </AnimatePresence>
-
     </motion.header>
   );
 };
