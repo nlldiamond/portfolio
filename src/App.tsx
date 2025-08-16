@@ -23,7 +23,7 @@ const projects = [
     title: "Everyday Ulam",
     description: "This project is a full stacked website. Developed using HTML, CSS, JavaScript with PHP and MySql as backend. TO BE HOSTED",
     image: RecipeBook,
-    link: "#", // Link dito
+    link: "https://everydayulam.vercel.app/", // Link dito
   },
   {
     title: "KaLaro",
