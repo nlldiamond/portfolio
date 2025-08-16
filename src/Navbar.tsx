@@ -3,30 +3,37 @@ import { motion, AnimatePresence, easeInOut } from "framer-motion";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [pendingScroll, setPendingScroll] = useState<string | null>(null);
 
   const toggleMenu = () => setIsOpen(!isOpen);
 
-  const menuVariants = {
-    hidden: { opacity: 0, y: -10 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.4,
-        ease: easeInOut,
-        staggerChildren: 0.1,
-      },
-    },
-    exit: { opacity: 0, y: -10, transition: { duration: 0.3, ease: easeInOut } },
+  const handleLinkClick = (id: string) => {
+    // Always store section to scroll
+    setPendingScroll(id);
+
+    // If mobile, close menu first
+    if (isOpen) {
+      setIsOpen(false);
+    } else {
+      // If desktop, scroll immediately
+      scrollToSection(id);
+    }
   };
 
-  const linkVariants = {
-    hidden: { opacity: 0, x: 20 },
-    visible: {
-      opacity: 1,
-      x: 0,
-      transition: { duration: 0.3, ease: easeInOut },
-    },
+  const scrollToSection = (id: string) => {
+    const section = document.getElementById(id);
+    if (section) {
+      console.log("✅ Scrolling into view:", id);
+      section.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  };
+
+  // After mobile menu closes (Framer Motion exit)
+  const handleAnimationComplete = () => {
+    if (pendingScroll) {
+      scrollToSection(pendingScroll);
+      setPendingScroll(null);
+    }
   };
 
   const menuItems = ["Home", "About", "Projects", "Skills", "Contact"];
@@ -48,7 +55,11 @@ const Navbar = () => {
             <a
               key={item}
               href={`#${item.toLowerCase()}`}
-              className="relative group transition"
+              className="relative group transition cursor-pointer"
+              onClick={(e) => {
+                e.preventDefault();
+                handleLinkClick(item.toLowerCase());
+              }}
             >
               {item}
               <span className="block h-[1px] w-0 group-hover:w-full transition-all bg-purple-400 duration-300"></span>
@@ -75,36 +86,23 @@ const Navbar = () => {
       </nav>
 
       {/* Mobile Dropdown */}
-      <AnimatePresence>
+      <AnimatePresence onExitComplete={handleAnimationComplete}>
         {isOpen && (
           <motion.div
-            initial="hidden"
-            animate="visible"
-            exit="exit"
-            variants={menuVariants}
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            transition={{ duration: 0.3, ease: easeInOut }}
             className="md:hidden px-6 pb-4 text-white text-sm uppercase tracking-wider text-right w-fit ml-auto"
           >
             {menuItems.map((item) => (
               <motion.a
                 key={item}
                 href={`#${item.toLowerCase()}`}
-                variants={linkVariants}
-                className="flex w-full items-center justify-end py-3 px-6 rounded-md hover:bg-purple-500/10 hover:text-purple-400 transition"
+                className="flex w-full items-center justify-end py-3 px-6 rounded-md hover:bg-purple-500/10 hover:text-purple-400 transition cursor-pointer"
                 onClick={(e) => {
-                  e.preventDefault(); // stop default anchor jump
-
-                  const section = document.getElementById(item.toLowerCase());
-                  if (section) {
-                    const yOffset = -70; // adjust for fixed header
-                    const y =
-                      section.getBoundingClientRect().top +
-                      window.scrollY +
-                      yOffset;
-
-                    window.scrollTo({ top: y, behavior: "smooth" });
-                  }
-
-                  setIsOpen(false);
+                  e.preventDefault();
+                  handleLinkClick(item.toLowerCase());
                 }}
               >
                 {item}

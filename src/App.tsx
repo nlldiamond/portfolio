@@ -141,7 +141,7 @@ function App() {
       {/* Projects Section */}
       <section
         id="projects"
-        className="min-h-screen flex flex-col items-center justify-center bg-[#232d3a] text-white p-10"
+        className="min-h-screen flex flex-col items-center justify-center bg-[#0e141b] text-white p-10"
       >
         <h2 className="text-4xl md:text-5xl font-bold mb-10 relative inline-block text-white">
           Projects
