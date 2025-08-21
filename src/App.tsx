@@ -1,5 +1,6 @@
+import { useState } from "react";
 import { Typewriter } from 'react-simple-typewriter';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from "framer-motion";
 import Navbar from './Navbar';
 import profileImg from './assets/zoomed.jpg';
 import { FaGithub, FaLinkedin, FaEnvelope, FaLaptopCode, FaNetworkWired, FaServer, FaDatabase, FaMicrosoft, FaPhoneAlt } from "react-icons/fa";
@@ -12,29 +13,58 @@ import canvaLogo from "./assets/canva.png";
 import NazerSS from "./assets/NazerSS.png"; 
 import RecipeBook from "./assets/RecipeBook.png"; 
 import KaLaro from "./assets/KaLaro.jpg"; 
-
-const projects = [
-  {
-    title: "Nazer Apps",
-    description: "A front-end redesign of the old nazer app website. Still in development",
-    image: NazerSS,
-    link: "#", // Link dito
-  },
-  {
-    title: "Everyday Ulam",
-    description: "A simple and clean recipe website built primarily with HTML and CSS, with a touch of JavaScript for basic interactivity. Perfect for browsing and discovering easy-to-follow recipes",
-    image: RecipeBook,
-    link: "https://everydayulam.vercel.app/", // Link dito
-  },
-  {
-    title: "KaLaro",
-    description: "An Android-based Multiplayer Traditional Filipino Game. The initiative aimed to transform four traditional games, Patintero, Tumbang Preso, Sawsaw Suka, and Palosebo, into an immersive Android-based multiplayer gaming experience. ",
-    image: KaLaro,
-    link: "https://nlldiamond.itch.io/kalaro",
-  },
-];
+// import sample from "./assets/sample.png";
+import nrTech from "./assets/nrTech.jpg";
+import Mobile from "./assets/Mobile.png";
+import cafePage from "./assets/cafe.png";
+import canva1 from "./assets/canva1.png";
+import canva2 from "./assets/canva2.jpg";
+// import { section } from "framer-motion/client";
 
 function App() {
+  // State for modal
+  const [selectedProjectIndex, setSelectedProjectIndex] = useState<number | null>(null);
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+
+  // Main projects
+  const projects = [
+    {
+      title: "Nazer Apps",
+      description:
+        "This project focuses on creating a modern, responsive front-end for a mobile app company’s website. It highlights the company’s services with a user-friendly, interactive design optimized for both desktop and mobile.. Still in development",
+      image: NazerSS,
+      link: "#"
+    },
+    {
+      title: "Everyday Ulam",
+      description:
+        "A simple and clean recipe website built primarily with HTML and CSS, with a touch of JavaScript for basic interactivity. Perfect for browsing and discovering easy-to-follow recipes",
+      image: RecipeBook,
+      link: "https://everydayulam.vercel.app/"
+    },
+    {
+      title: "KaLaro",
+      description:
+        "An Android-based Multiplayer Traditional Filipino Game. The initiative aimed to transform four traditional games, Patintero, Tumbang Preso, Sawsaw Suka, and Palosebo, into an immersive Android-based multiplayer gaming experience.",
+      image: KaLaro,
+      link: "https://nlldiamond.itch.io/kalaro"
+    }
+  ];
+
+  // Other projects with multiple images (now only 2)
+  const otherProjects = [
+    {
+      title: "Figma UI Designs",
+      description: "UI mockups designed in Figma.",
+      images: [nrTech, Mobile, cafePage]
+    },
+    {
+      title: "Canva Marketing Design",
+      description: "Promotional Canva design for client branding.",
+      images: [canva1, canva2]
+    }
+  ];
+  
   return (
     <>
       <Navbar />
@@ -48,7 +78,7 @@ function App() {
           <motion.img
             src={profileImg}
             alt="Profile"
-            className="w-40 h-40 rounded-full mx-auto border-4 border-purple-500"
+            className="w-40 h-40 rounded-full mx-auto border-4"
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1 }}
@@ -147,67 +177,185 @@ function App() {
           Projects
           <span className="absolute left-0 -bottom-3.5 w-full h-1 bg-purple-500 rounded-full"></span>
         </h2>
+
+        {/* Main Projects */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 w-full max-w-6xl">
           {projects.map((project, i) => {
             const isExternal = project.link.startsWith("http");
             const isPlaceholder = project.link === "#";
 
-            const handleClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
-              if (isPlaceholder) {
-                e.preventDefault();
-                console.log(`${project.title} is still in development`);
-              }
-            };
-
             return (
               <motion.a
                 key={i}
-                href={project.link}
-                onClick={handleClick}
+                href={isPlaceholder ? undefined : project.link}
                 target={isExternal ? "_blank" : "_self"}
                 rel={isExternal ? "noopener noreferrer" : undefined}
                 initial={{ scale: 0.8, opacity: 0 }}
                 whileInView={{ scale: 1, opacity: 1 }}
                 transition={{
-                  duration: 0.6,
+                  duration: 0.1,
                   ease: "easeOut",
-                  delay: i * 0.2,
+                  delay: i * 0.1,
                 }}
                 viewport={{ once: true }}
-                className={`bg-[#161f2b] h-96 rounded-lg shadow-lg flex flex-col items-center justify-start 
-                            text-gray-400 transition-all duration-300 hover:scale-105 hover:text-white p-4 
-                            relative ${isPlaceholder ? "opacity-60 cursor-not-allowed" : ""}`}
-                style={{
-                  boxShadow: "0 0 20px rgba(128, 0, 128, 0.6)",
+                whileHover={{
+                  scale: 1.05,
+                  boxShadow:
+                    "0 0 25px rgba(168,85,247,0.9), 0 0 50px rgba(168,85,247,0.6)", // hover glow
                 }}
-                onMouseEnter={(e) =>
-                  (e.currentTarget.style.boxShadow =
-                    "0 0 25px rgba(168, 85, 247, 0.9), 0 0 50px rgba(168, 85, 247, 0.6)")
-                }
-                onMouseLeave={(e) =>
-                  (e.currentTarget.style.boxShadow =
-                    "0 0 20px rgba(128, 0, 128, 0.6)")
-                }
+                className={`bg-[#161f2b] h-96 rounded-lg flex flex-col items-center justify-start 
+                  text-gray-400 transition-all duration-300 hover:text-white p-4 relative 
+                  ${isPlaceholder ? "opacity-60 cursor-not-allowed" : ""}`}
+                style={{
+                  boxShadow: "0 0 12px rgba(168,85,247,0.4)", // default subtle glow
+                }}
               >
-                {project.image ? (
-                  <img
-                    src={project.image}
-                    alt={project.title}
-                    className="w-full h-40 object-cover rounded-md mb-4"
-                  />
-                ) : (
-                  <div className="w-full h-40 bg-gray-700 rounded-md mb-4 flex items-center justify-center">
-                    <span className="text-gray-400">Image Placeholder</span>
-                  </div>
-                )}
-
+                <img
+                  src={project.image}
+                  alt={project.title}
+                  className="w-full h-40 object-cover rounded-md mb-4"
+                />
                 <h3 className="text-2xl font-bold mb-2">{project.title}</h3>
-                <p className="text-center text-gray-400 text-sm">{project.description}</p>
+                <p className="text-center text-gray-400 text-sm">
+                  {project.description}
+                </p>
               </motion.a>
             );
           })}
         </div>
+
+        {/* 🔹 Other Projects Section */}
+        {/* <div className="mt-20 w-full max-w-6xl text-center"> */}
+          <h3 className="text-2xl font-bold text-white border-b-2 border-purple-500 inline-block mt-12">
+            Other Projects
+          </h3>
+
+        <div className="flex justify-center mt-10">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
+            {otherProjects.map((proj, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.1, ease: "easeOut", delay: i * 0.1 }}
+                viewport={{ once: true }}
+                onClick={() => {
+                  setSelectedProjectIndex(i);
+                  setCurrentImageIndex(0);
+                }}
+                whileHover={{
+                  scale: 1.05,
+                  boxShadow:
+                    "0 0 20px rgba(168,85,247,0.9), 0 0 40px rgba(168,85,247,0.6)", // hover glow
+                }}
+                className="cursor-pointer bg-[#161f2b] rounded-lg flex flex-col items-center 
+                  justify-start text-gray-400 transition-all duration-300 hover:text-white p-4"
+                style={{
+                  boxShadow: "0 0 10px rgba(168,85,247,0.3)", // default subtle glow
+                }}
+              >
+                <img
+                  src={proj.images[0]}
+                  alt={proj.title}
+                  className="w-full max-h-60 object-contain rounded-md mb-4"
+                />
+                <h3 className="text-xl font-bold mb-2">{proj.title}</h3>
+                <p className="text-center text-gray-400 text-sm">{proj.description}</p>
+              </motion.div>
+            ))}
+          </div>
+        </div>
       </section>
+
+      {/* 🔹 Modal Carousel */}
+      <AnimatePresence>
+        {selectedProjectIndex !== null && (
+          <motion.div
+            className="fixed inset-0 bg-black/80 flex flex-col items-center justify-center z-50"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => setSelectedProjectIndex(null)} // close on background click
+          >
+            <div
+              className="relative w-full max-w-3xl flex items-center justify-center"
+              onClick={(event) => event.stopPropagation()} // prevent closing when clicking image
+            >
+              <motion.img
+                key={otherProjects[selectedProjectIndex].images[currentImageIndex]}
+                src={otherProjects[selectedProjectIndex].images[currentImageIndex]}
+                alt="Preview"
+                className="max-h-[80vh] rounded-lg mx-auto"
+                initial={{ x: 100, opacity: 0 }}
+                animate={{ x: 0, opacity: 1 }}
+                exit={{ x: -100, opacity: 0 }}
+                transition={{ duration: 0.4 }}
+                drag="x"
+                dragConstraints={{ left: 0, right: 0 }}
+                style={{
+                  boxShadow: "0 0 15px rgba(168,85,247,0.4)", // ✨ subtle default glow
+                }}
+                whileHover={{
+                  scale: 1.02,
+                  boxShadow:
+                    "0 0 30px rgba(168,85,247,0.9), 0 0 60px rgba(168,85,247,0.6)", // ✨ hover glow
+                }}
+                onDragEnd={(_e, { offset }) => {
+                  if (offset.x < -100) {
+                    setCurrentImageIndex(
+                      (prev) =>
+                        (prev + 1) %
+                        otherProjects[selectedProjectIndex].images.length
+                    );
+                  } else if (offset.x > 100) {
+                    setCurrentImageIndex(
+                      (prev) =>
+                        (prev - 1 + otherProjects[selectedProjectIndex].images.length) %
+                        otherProjects[selectedProjectIndex].images.length
+                    );
+                  }
+                }}
+              />
+
+              {/* Prev Button */}
+              <button
+                className="absolute left-4 text-3xl text-white bg-black/50 rounded-full px-3 py-1"
+                onClick={() =>
+                  setCurrentImageIndex(
+                    (prev) =>
+                      (prev - 1 + otherProjects[selectedProjectIndex].images.length) %
+                      otherProjects[selectedProjectIndex].images.length
+                  )
+                }
+              >
+                ‹
+              </button>
+
+              {/* Next Button */}
+              <button
+                className="absolute right-4 text-3xl text-white bg-black/50 rounded-full px-3 py-1"
+                onClick={() =>
+                  setCurrentImageIndex(
+                    (prev) =>
+                      (prev + 1) %
+                      otherProjects[selectedProjectIndex].images.length
+                  )
+                }
+              >
+                ›
+              </button>
+            </div>
+
+            {/* Close Button */}
+            <button
+              onClick={() => setSelectedProjectIndex(null)}
+              className="absolute top-6 right-6 text-white text-3xl"
+            >
+              &times;
+            </button>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {/* Skills Section */}
       <motion.section
@@ -219,7 +367,7 @@ function App() {
         viewport={{ once: true, amount: 0.2 }}
       >
         <div className="max-w-5xl w-full text-center">
-          <h2 className="text-4xl md:text-5xl font-bold mb-10 relative inline-block text-white">
+          <h2 className="text-4xl md:text-5xl font-bold mb-10 relative inline-block mt-12 text-white">
             Skills
             <span className="absolute left-1/2 transform -translate-x-1/2 -bottom-3.5 w-full h-1 bg-purple-500 rounded-full"></span>
           </h2>
