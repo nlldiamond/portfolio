@@ -60,7 +60,7 @@ function App() {
     },
     {
       title: "Canva Marketing Design",
-      description: "Promotional Canva design for client branding.",
+      description: "Promotional Canva design for client branding. Sample",
       images: [canva1, canva2]
     }
   ];
