@@ -13,12 +13,13 @@ import canvaLogo from "./assets/canva.png";
 import NazerSS from "./assets/NazerSS.png"; 
 import RecipeBook from "./assets/RecipeBook.png"; 
 import KaLaro from "./assets/KaLaro.jpg"; 
-// import sample from "./assets/sample.png";
 import nrTech from "./assets/nrTech.jpg";
 import Mobile from "./assets/Mobile.png";
 import cafePage from "./assets/cafe.png";
 import canva1 from "./assets/canva1.png";
 import canva2 from "./assets/canva2.jpg";
+import weather from "./assets/weather.png";
+import ToDo from "./assets/ToDo.png";
 // import { section } from "framer-motion/client";
 
 function App() {
@@ -29,12 +30,12 @@ function App() {
   // Main projects
   const projects = [
     {
-      title: "Nazer Apps",
-      description:
-        "This project focuses on creating a modern, responsive front-end for a mobile app company’s website. It highlights the company’s services with a user-friendly, interactive design optimized for both desktop and mobile.. Still in development",
-      image: NazerSS,
-      link: "#"
+      title: "ToDo Task Dashboard",
+      description: "A Task Management Dashboard where users can create, rename, and delete lists, add and reorder tasks via drag-and-drop, and manage tasks in real time. Built with React (Vite), Tailwind CSS, Framer Motion, dnd-kit, and Lucide React on the frontend, and a Node.js + Express backend with MongoDB Atlas, deployed using Vercel and Render.",
+      image: ToDo, 
+      link: "https://todoornottodo.vercel.app/",
     },
+
     {
       title: "Everyday Ulam",
       description:
@@ -43,12 +44,24 @@ function App() {
       link: "https://everydayulam.vercel.app/"
     },
     {
+      title: "Weather App",
+      description: "A simple and interactive Weather Forecast App built with HTML, CSS, and JavaScript. It fetches real-time weather data using the WeatherAPI REST API",
+      image: weather,
+      link: "https://weather2-lang.vercel.app/",
+    },
+    {
       title: "KaLaro",
       description:
         "An Android-based Multiplayer Traditional Filipino Game. The initiative aimed to transform four traditional games, Patintero, Tumbang Preso, Sawsaw Suka, and Palosebo, into an immersive Android-based multiplayer gaming experience.",
       image: KaLaro,
       link: "https://nlldiamond.itch.io/kalaro"
-    }
+    },
+    {
+      title: "Nazer Apps",
+      description: "This project focuses on creating a modern, responsive front-end for a mobile app company’s website. It highlights the company’s services with a user-friendly, interactive design optimized for both desktop and mobile.. Still in development",
+      image: NazerSS,
+      link: "#"
+    },
   ];
 
   // Other projects with multiple images (now only 2)
@@ -59,8 +72,8 @@ function App() {
       images: [nrTech, Mobile, cafePage]
     },
     {
-      title: "Canva Marketing Design",
-      description: "Promotional Canva design for client branding. Sample",
+      title: "Canva Marketing Designs",
+      description: "Promotional Canva design for client branding.",
       images: [canva1, canva2]
     }
   ];
