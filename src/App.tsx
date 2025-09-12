@@ -10,14 +10,13 @@ import {
 import { VscVscode } from "react-icons/vsc";
 import heyorcaLogo from "./assets/heyorca.jpeg";
 import canvaLogo from "./assets/canva.png";
-import NazerSS from "./assets/NazerSS.png"; 
+import cngSS from "./assets/cngSS.png"; 
 import RecipeBook from "./assets/RecipeBook.png"; 
 import KaLaro from "./assets/KaLaro.jpg"; 
 import nrTech from "./assets/nrTech.jpg";
 import Mobile from "./assets/Mobile.png";
 import cafePage from "./assets/cafe.png";
-import canva1 from "./assets/canva1.png";
-import canva2 from "./assets/canva2.jpg";
+import canvaImages from "./canvaImages";
 import weather from "./assets/weather.png";
 import ToDo from "./assets/ToDo.png";
 // import { section } from "framer-motion/client";
@@ -57,14 +56,14 @@ function App() {
       link: "https://nlldiamond.itch.io/kalaro"
     },
     {
-      title: "Nazer Apps",
-      description: "This project focuses on creating a modern, responsive front-end for a mobile app company’s website. It highlights the company’s services with a user-friendly, interactive design optimized for both desktop and mobile.. Still in development",
-      image: NazerSS,
+      title: "Create&Glow",
+      description: "This project involves developing a sleek, responsive website for an upcoming social media marketing startup. The design emphasizes brand storytelling, client engagement, and seamless navigation, creating a professional yet approachable online presence tailored for both desktop and mobile users.",
+      image: cngSS,
       link: "#"
     },
   ];
 
-  // Other projects with multiple images (now only 2)
+  // Other projects with multiple images
   const otherProjects = [
     {
       title: "Figma UI Designs",
@@ -74,7 +73,7 @@ function App() {
     {
       title: "Canva Marketing Designs",
       description: "Promotional Canva design for client branding.",
-      images: [canva1, canva2]
+      images: canvaImages  
     }
   ];
   
