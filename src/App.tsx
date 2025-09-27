@@ -19,12 +19,16 @@ import cafePage from "./assets/cafe.png";
 import canvaImages from "./canvaImages";
 import weather from "./assets/weather.png";
 import ToDo from "./assets/ToDo.png";
+import nazerapps from "./assets/nazerapps.png";
 // import { section } from "framer-motion/client";
 
 function App() {
   // State for modal
   const [selectedProjectIndex, setSelectedProjectIndex] = useState<number | null>(null);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+
+    // New state for Create&Glow popup
+  const [showCngModal, setShowCngModal] = useState(false);
 
   // Main projects
   const projects = [
@@ -57,9 +61,14 @@ function App() {
     },
     {
       title: "Create&Glow",
-      description: "This project involves developing a sleek, responsive website for an upcoming social media marketing startup. The design emphasizes brand storytelling, client engagement, and seamless navigation, creating a professional yet approachable online presence tailored for both desktop and mobile users.",
+      description: "This project involves developing a sleek, responsive website for our upcoming social media marketing startup. The design emphasizes brand storytelling, client engagement, and seamless navigation, creating a professional yet approachable online presence tailored for both desktop and mobile users. !Still in development not yet Deployed!" ,
       image: cngSS,
       link: "#"
+    },
+  {      title: "Nazerapps",
+      description: "A simple company website built with WordPress to showcase mobile application services, providing an easy-to-navigate platform with responsive design." ,
+      image: nazerapps,
+      link: "https://www.nazerapps.com/"
     },
   ];
 
@@ -190,18 +199,17 @@ function App() {
           <span className="absolute left-0 -bottom-3.5 w-full h-1 bg-purple-500 rounded-full"></span>
         </h2>
 
-        {/* Main Projects */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 w-full max-w-6xl">
-          {projects.map((project, i) => {
-            const isExternal = project.link.startsWith("http");
-            const isPlaceholder = project.link === "#";
+      {/* Main Projects */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-8 w-full max-w-6xl">
+        {projects.map((project, i) => {
+          const isExternal = project.link.startsWith("http");
 
+          // Special handling for Create&Glow
+          if (project.title === "Create&Glow") {
             return (
-              <motion.a
+              <motion.div
                 key={i}
-                href={isPlaceholder ? undefined : project.link}
-                target={isExternal ? "_blank" : "_self"}
-                rel={isExternal ? "noopener noreferrer" : undefined}
+                onClick={() => setShowCngModal(true)} // open modal
                 initial={{ scale: 0.8, opacity: 0 }}
                 whileInView={{ scale: 1, opacity: 1 }}
                 transition={{
@@ -213,13 +221,12 @@ function App() {
                 whileHover={{
                   scale: 1.05,
                   boxShadow:
-                    "0 0 25px rgba(168,85,247,0.9), 0 0 50px rgba(168,85,247,0.6)", // hover glow
+                    "0 0 25px rgba(168,85,247,0.9), 0 0 50px rgba(168,85,247,0.6)",
                 }}
-                className={`bg-[#161f2b] h-96 rounded-lg flex flex-col items-center justify-start 
-                  text-gray-400 transition-all duration-300 hover:text-white p-4 relative 
-                  ${isPlaceholder ? "opacity-60 cursor-not-allowed" : ""}`}
+                className="bg-[#161f2b] h-96 rounded-lg flex flex-col items-center justify-start 
+                  text-gray-400 transition-all duration-300 hover:text-white p-4 relative cursor-pointer"
                 style={{
-                  boxShadow: "0 0 12px rgba(168,85,247,0.4)", // default subtle glow
+                  boxShadow: "0 0 12px rgba(168,85,247,0.4)",
                 }}
               >
                 <img
@@ -231,12 +238,51 @@ function App() {
                 <p className="text-center text-gray-400 text-sm">
                   {project.description}
                 </p>
-              </motion.a>
+              </motion.div>
             );
-          })}
-        </div>
+          }
 
-        {/* 🔹 Other Projects Section */}
+          // Default: use <a> for projects with links
+          return (
+            <motion.a
+              key={i}
+              href={project.link}
+              target={isExternal ? "_blank" : "_self"}
+              rel={isExternal ? "noopener noreferrer" : undefined}
+              initial={{ scale: 0.8, opacity: 0 }}
+              whileInView={{ scale: 1, opacity: 1 }}
+              transition={{
+                duration: 0.1,
+                ease: "easeOut",
+                delay: i * 0.1,
+              }}
+              viewport={{ once: true }}
+              whileHover={{
+                scale: 1.05,
+                boxShadow:
+                  "0 0 25px rgba(168,85,247,0.9), 0 0 50px rgba(168,85,247,0.6)",
+              }}
+              className="bg-[#161f2b] h-96 rounded-lg flex flex-col items-center justify-start 
+                text-gray-400 transition-all duration-300 hover:text-white p-4 relative"
+              style={{
+                boxShadow: "0 0 12px rgba(168,85,247,0.4)",
+              }}
+            >
+              <img
+                src={project.image}
+                alt={project.title}
+                className="w-full h-40 object-cover rounded-md mb-4"
+              />
+              <h3 className="text-2xl font-bold mb-2">{project.title}</h3>
+              <p className="text-center text-gray-400 text-sm">
+                {project.description}
+              </p>
+            </motion.a>
+          );
+        })}
+      </div>
+
+        {/* Other Projects Section */}
         {/* <div className="mt-20 w-full max-w-6xl text-center"> */}
           <h3 className="text-2xl font-bold text-white border-b-2 border-purple-500 inline-block mt-12">
             Other Projects
@@ -279,7 +325,7 @@ function App() {
         </div>
       </section>
 
-      {/* 🔹 Modal Carousel */}
+      {/* Modal Carousel */}
       <AnimatePresence>
         {selectedProjectIndex !== null && (
           <motion.div
@@ -361,6 +407,41 @@ function App() {
             {/* Close Button */}
             <button
               onClick={() => setSelectedProjectIndex(null)}
+              className="absolute top-6 right-6 text-white text-3xl"
+            >
+              &times;
+            </button>
+          </motion.div>
+        )}
+      </AnimatePresence>
+      
+      {/* Single-Image Modal (Create&Glow) */}
+      <AnimatePresence>
+        {showCngModal && (
+          <motion.div
+            className="fixed inset-0 bg-black/80 flex flex-col items-center justify-center z-50"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => setShowCngModal(false)}
+          >
+            <div
+              className="relative w-full max-w-3xl flex items-center justify-center"
+              onClick={(event) => event.stopPropagation()}
+            >
+              <motion.img
+                src={cngSS}
+                alt="Create&Glow Preview"
+                className="max-h-[80vh] rounded-lg mx-auto"
+                initial={{ scale: 0.8, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                exit={{ scale: 0.8, opacity: 0 }}
+                transition={{ duration: 0.3 }}
+              />
+            </div>
+
+            <button
+              onClick={() => setShowCngModal(false)}
               className="absolute top-6 right-6 text-white text-3xl"
             >
               &times;
